@@ -1,7 +1,7 @@
 import os
 import re
 
-import fitz  # PyMuPDF
+import fitz  
 import faiss
 import numpy as np
 import streamlit as st
@@ -70,6 +70,23 @@ def normalize_for_pdf(text: str) -> str:
     text = text.replace("---", "\n" + "-" * 45 + "\n")
 
     return text.strip()
+
+def extract_syllabus_subject(text: str) -> str:
+    lines = [line.strip() for line in text.split("\n") if line.strip()]
+
+    for line in lines[:20]:  # first page only
+        if (
+            len(line) < 80
+            and not re.search(r"\d", line)
+            and not any(
+                kw in line.lower()
+                for kw in ["semester", "unit", "module", "course"]
+            )
+        ):
+            return line.upper()
+
+    return "UNIVERSITY EXAMINATION"
+
 
 
 def extract_topics(text: str, k: int = 15):
@@ -190,6 +207,7 @@ uploaded_file = st.file_uploader(
 )
 
 text_data = ""
+subject_title = "UNIVERSITY EXAMINATION"
 
 if uploaded_file:
     with st.status("Reading PDF..."):
@@ -199,7 +217,7 @@ if uploaded_file:
         )
         for page in doc:
             text_data += clean_text(page.get_text())
-
+    subject_title = extract_syllabus_subject(text_data)
     st.success("✅ Syllabus Loaded")
 
 
@@ -224,6 +242,9 @@ if st.button(" Step 2: Generate Question Paper"):
 You are a strict University Professor.
 
 Create a formal {total_marks} examination paper.
+
+SUBJECT:
+{subject_title}
 
 TOPICS:
 {topics_summary}
@@ -254,7 +275,7 @@ RULES:
 
             pdf_bytes = create_pdf(
                 exam_text,
-                f"{total_marks} Examination"
+                {subject_title}
             )
 
             st.download_button(
