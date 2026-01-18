@@ -9,13 +9,6 @@ import google.generativeai as genai
 
 from sentence_transformers import SentenceTransformer
 from fpdf import FPDF
-from dotenv import load_dotenv
-
-
-# ======================================================
-# LOAD ENVIRONMENT VARIABLES
-# ======================================================
-load_dotenv()
 
 
 # ======================================================
@@ -38,9 +31,6 @@ with st.sidebar:
     st.header("⚙️ Configuration")
 
     gemini_api_key =st.secrets["api_keys"]["gemini_api_key"]
-    st.write("API Key Loaded:", bool(gemini_api_key))
-
-    # 🔴 Model name kept exactly as requested
     model_name = "gemini-2.5-flash-lite"
 
     difficulty = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"])
@@ -213,7 +203,7 @@ if uploaded_file:
     st.success("✅ Syllabus Loaded")
 
 
-if st.button("🚀 Step 2: Generate Question Paper"):
+if st.button(" Step 2: Generate Question Paper"):
     if not gemini_api_key:
         st.error("❌ GEMINI_API_KEY missing")
         st.stop()

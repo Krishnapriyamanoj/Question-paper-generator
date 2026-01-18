@@ -5,4 +5,3 @@ numpy
 sentence-transformers
 google-generativeai
 fpdf
-load_dotenv
