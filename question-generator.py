@@ -259,7 +259,7 @@ RULES:
 - No answers
 - MCQs must have (A)(B)(C)(D)
 - University exam tone
-- Heading of the question paper must be the subject of syllabus shared.
+- Heading of the question paper {subject_title}
 """
 
             response = model.generate_content(prompt)
