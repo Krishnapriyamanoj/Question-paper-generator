@@ -1,7 +1,7 @@
 streamlit
-huggingface_hub
-pymupdf
+PyMuPDF
 faiss-cpu
 numpy
 sentence-transformers
-torch
+google-generativeai
+fpdf
