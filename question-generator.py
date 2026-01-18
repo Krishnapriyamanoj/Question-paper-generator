@@ -37,7 +37,7 @@ st.write("Convert your syllabus PDF into a structured university-style exam pape
 with st.sidebar:
     st.header("⚙️ Configuration")
 
-    gemini_api_key = os.getenv("GEMINI_API_KEY")
+    gemini_api_key =st.secrets["api_keys"]["gemini_api_key"]
     st.write("API Key Loaded:", bool(gemini_api_key))
 
     # 🔴 Model name kept exactly as requested
