@@ -275,7 +275,7 @@ RULES:
 
             pdf_bytes = create_pdf(
                 exam_text,
-                {subject_title}
+                subject_title
             )
 
             st.download_button(
